@@ -1,6 +1,6 @@
 var express = require('express')
-  , load = require('express-load'),
-    bodyParser = require('body-parser');
+, load = require('express-load')
+, bodyParser = require('body-parser');
   
 var mongoose = require('mongoose');
 var app = express();
