@@ -1,7 +1,10 @@
 {
-  "name": "web-presence",
+  "name": "app",
   "version": "0.0.1",
   "private": false,
+  "scripts": {
+    "start": "node app.js"
+  },
   "dependencies": {
     "angular-filter": "^0.5.11",
     "angular-ui-router": "^0.3.1",

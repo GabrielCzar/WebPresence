@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 var app = express();
 
 
-global.db = mongoose.connect('mongodb://localhost/presence_db');
+global.db = mongoose.connect('mongodb://mongo:27017/presence_db');
 
 mongoose.connection.on('connected', function(){
   console.log("Mongoose Connected!");
