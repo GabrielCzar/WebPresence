@@ -10,10 +10,13 @@
     "angular-ui-router": "^0.3.1",
     "async": "^2.0.1",
     "body-parser": "^1.18.2",
-    "ejs": "0.8.5",
-    "express": "3.4.7",
+    "cookie-parser": "^1.4.3",
+    "ejs": "^2.5.7",
+    "express": "^4.16.2",
     "express-load": "1.1.8",
+    "express-session": "^1.15.6",
     "materialize-clockpicker": "^1.0.1",
+    "method-override": "^2.3.10",
     "mongoose": "3.8.4",
     "mongoose-schema-formatdate": "^1.0.0"
   }

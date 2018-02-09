@@ -1,11 +1,15 @@
 var express = require('express')
 , load = require('express-load')
-, bodyParser = require('body-parser');
-  
-var mongoose = require('mongoose');
-var app = express();
+, bodyParser = require('body-parser')
+, mongoose = require('mongoose')
+, session = require('express-session')
+, path = require('path')
+, methodOverride = require('method-override')
+, cookieParser = require('cookie-parser')
+, router = express.Router()
+, app = express();
 
-
+// Mongo DB
 global.db = mongoose.connect('mongodb://mongo:27017/presence_db');
 
 mongoose.connection.on('connected', function(){
@@ -18,21 +22,19 @@ mongoose.connection.on('error', function(err){
 
 
 // Configuration
-app.configure(function(){
-  app.set('views', __dirname + '/views');
-  app.engine('html', require('ejs').renderFile);
-  app.set('view engine', 'html');
-  app.use(express.static(__dirname + '/public'));
-  app.use(express.methodOverride());
-  app.use(bodyParser.json());
-  app.use(express.cookieParser());
-  app.use(express.session({ secret: 'your secret here' }));
-  app.use(app.router);
-});
+app.set('port', process.env.PORT || 3000);
+app.set('views', path.join(__dirname + '/views'));
+app.engine('html', require('ejs').renderFile);
+app.set('view engine', 'html');
+
+app.use(express.static(path.join(__dirname + '/public')));
+app.use(methodOverride());
+app.use(bodyParser.json());
+app.use(cookieParser());
+app.use(session({ resave: true, saveUninitialized: true, secret: 'your secret here'}));
+app.use(router);
+// End Configuration
 
 load('models').then('controllers').then('routes').into(app);
 
-
-app.listen(3000, function(){
-  console.log("PresenceWeb Server is Online...");
-});
+app.listen(app.get('port'), () => console.log("PresenceWeb Server is Online..."));
