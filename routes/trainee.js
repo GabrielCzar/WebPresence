@@ -1,5 +1,3 @@
-
-
 module.exports = function(app){
 	var trainee = app.controllers.user;
 

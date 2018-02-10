@@ -2,7 +2,7 @@ module.exports = function(app){
 
 	var mongoose = require('mongoose');
 	var Schema =  mongoose.Schema;
-    var ObjectId = mongoose.Schema.Types.ObjectId;
+    var ObjectId = Schema.Types.ObjectId;
 
     var Role = app.models.role;
 

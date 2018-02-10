@@ -12,10 +12,10 @@ module.exports = function(app){
 		getRoles: function(req, res){
 			Role.find({}, function(err, roles){
 				if(err){
-					console.log("Error when trying get all roles: "+err);
-					res.json({result: false});
+					console.log("Error when trying get all roles: " + err);
+					res.json({ result: false });
 				}
-				res.json({result: true, data:roles});
+				res.json({ result: true, data:roles });
 			});
 		},
 
@@ -29,12 +29,12 @@ module.exports = function(app){
 
 			User.checkLogin(user, function(err, userDB){
 				if( err || !userDB ){
-					console.log(err+" "+userDB);
+					console.log(err + " " + userDB);
 					return res.json({result : false});
 				}
-				console.log("User: "+userDB+" added to session!");
+				console.log("User: " + userDB + " added to session!");
 				req.session.userLogged = userDB;
-				return res.json({result:true, data:userDB});
+				return res.json({ result:true, data:userDB });
 			});
 			
 		},

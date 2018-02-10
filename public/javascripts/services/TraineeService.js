@@ -9,11 +9,11 @@ angular.module('app').factory('traineeService', function($http){
 	};
 
 	var _getTeamPresence = function(idTeam, idTrainee){
-        return $http.get('/trainee/presence/'+idTeam+'/'+idTrainee);
+        return $http.get('/trainee/presence/' + idTeam + '/' + idTrainee);
 	};
 
     var _checkPresence = function(idTrainee, idTeam){
-        return $http.post('/trainee/presence', {idTrainee : idTrainee, idTeam: idTeam});
+        return $http.post('/trainee/presence', { idTrainee: idTrainee, idTeam: idTeam });
     };
 
 	return {

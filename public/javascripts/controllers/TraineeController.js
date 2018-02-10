@@ -102,6 +102,7 @@ angular.module("app").controller("TraineeController", function($scope, loginServ
            // }) ;
 
         $scope.trainee.role.type = "TRAINEE";
+        
         traineeService.createAccount(trainee).success(function(response){
 
             if(response.result){
