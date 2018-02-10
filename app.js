@@ -6,6 +6,7 @@ var express = require('express')
 , path = require('path')
 , methodOverride = require('method-override')
 , cookieParser = require('cookie-parser')
+, role = require('./models/role')
 , router = express.Router()
 , app = express();
 
