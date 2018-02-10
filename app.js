@@ -10,16 +10,14 @@ var express = require('express')
 , app = express();
 
 // Mongo DB
-global.db = mongoose.connect('mongodb://mongo:27017/presence_db');
+mongoose.connect('mongodb://mongo:27017/presence_db', { poolSize: 10 })
+  .then(
+  	() => console.log('Connected to db'),
+  	err => console.log('Error in connection')
+ );
 
-mongoose.connection.on('connected', function(){
-  console.log("Mongoose Connected!");
-});
-
-mongoose.connection.on('error', function(err){
-  console.log("Error when tried connect to db: "+err);
-});
-
+// Connection global access
+global.db = mongoose.connection; 
 
 // Configuration
 app.set('port', process.env.PORT || 3000);

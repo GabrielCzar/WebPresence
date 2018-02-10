@@ -1,21 +1,20 @@
 module.exports = function(app){
-
     var mongoose = require('mongoose');
 	var Schema = mongoose.Schema;
-    var ObjectId = mongoose.Types.ObjectId;
+    var ObjectId = mongoose.Schema.Types.ObjectId;
 
 	var team = Schema({
-		date_init: {type: Date, required: true},
-		date_end:  {type: Date, required: true},
-		trainees: [{type: Schema.Types.ObjectId, ref: 'User'}],
-		days: [{type: Schema.Types.ObjectId, ref: 'Day'}],
-        mac_ap : {type: String, required: true},
-        name: {type: String},
-        distance: {type: Number},
-        percent: {type: Number}
+		date_init: { type: Date, required: true },
+		date_end:  { type: Date, required: true },
+		trainees: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+		days: [{ type: Schema.Types.ObjectId, ref: 'Day' }],
+        mac_ap : { type: String, required: true },
+        name: { type: String },
+        distance: { type: Number },
+        percent: { type: Number }
 	});
 
-	team.statics.getAll = function(callback){
+	team.statics.getAll = function (callback) {
 		this.find({}).populate('days').populate('trainees').exec(callback);
 	};
 
@@ -24,12 +23,11 @@ module.exports = function(app){
     };
 
     team.statics.findById = function (idTeam, callback) {
-        this.findOne({'_id':idTeam}).populate('days').exec(callback);
+        this.findOne({'_id': idTeam}).populate('days').exec(callback);
     };
 
-    team.statics.findByIdAndDay = function(idTeam, idDay, callback){
-
-        this.findOne({'_id' : idTeam}).populate('days').exec(function(err, team){
+    team.statics.findByIdAndDay = function (idTeam, idDay, callback) {
+        this.findOne({'_id' : idTeam}).populate('days').exec(function (err, team) {
             if(err){
                 callback(err, team);
             }else {
@@ -50,7 +48,7 @@ module.exports = function(app){
         });
     };
 
-	team.statics.create = function(team, trainees, days, callback){
+	team.statics.create = function (team, trainees, days, callback) {
         var _team = new this();
         _team.date_init = team.date_init;
         _team.date_end = team.date_end;
@@ -61,14 +59,12 @@ module.exports = function(app){
         _team.distance = team.distance;
         _team.percent = team.percent;
 
-        trainees.forEach(function(_idTrainee){
-            _team.trainees.push(ObjectId(_idTrainee));
-        });
+        trainees.forEach(_idTrainee => _team.trainees.push(ObjectId(_idTrainee)));
 
         _team.save(callback);
 
     };
 
-	return db.model('Team', team);
+	return global.db.model('Team', team);
 
 }

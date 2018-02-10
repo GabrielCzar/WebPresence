@@ -1,27 +1,26 @@
-module.exports = function(){
-
+module.exports = function () {
     var mongoose = require('mongoose');
 	var Schema = mongoose.Schema;
-	var ObjectId = mongoose.Types.ObjectId;
+	var ObjectId = mongoose.Schema.Types.ObjectId;
 
 	var presence = Schema({
-		date : {type:Date, default: Date.now},
-		trainee: {type: Schema.Types.ObjectId, ref: 'User'},
-		team: {type: Schema.Types.ObjectId, ref: 'team'},
-        checks : {type: Number},
-        percents : [{type: Number}],
-        average : {type: Number},
-        valid : {type: Boolean},
-        lastCheck: {type:Boolean, default: false}
+		date : { type: Date, default: Date.now },
+		trainee: { type: Schema.Types.ObjectId, ref: 'User' },
+		team: { type: Schema.Types.ObjectId, ref: 'team' },
+        checks : { type: Number },
+        percents : [{ type: Number }],
+        average : { type: Number },
+        valid : { type: Boolean },
+        lastCheck: { type: Boolean, default: false }
 	});
 
-	presence.statics.getTraineePresences = function(idTeam, idTrainee, callback){
+	presence.statics.getTraineePresences = function (idTeam, idTrainee, callback) {
 		idTeam = idTeam;
 		idTrainee = ObjectId(idTrainee);
 		this.find({'team' : idTeam, 'trainee':idTrainee}).exec(callback);
 	};
 
-    presence.statics.checkTraineePresence = function(idTrainee, idTeam, callback){
+    presence.statics.checkTraineePresence = function (idTrainee, idTeam, callback) {
         idTrainee = ObjectId(idTrainee);
         idTeam = ObjectId(idTeam);
 
@@ -48,9 +47,9 @@ module.exports = function(){
         return _pres.save(callback);
     };
 
-    presence.statics.update = function (idPresence, checks, percents, avg, isPresenceValid, callback){
+    presence.statics.update = function (idPresence, checks, percents, avg, isPresenceValid, callback) {
         this.findOneAndUpdate({_id : idPresence}, {$set : {average : avg, valid: isPresenceValid, checks : checks, percents : percents}}, {new: true}, callback);
     };
 
-	return db.model('Presence', presence);
+	return global.db.model('Presence', presence);
 };
