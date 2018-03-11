@@ -15,7 +15,7 @@ module.exports = function(app){
 					console.log("Error when trying get all roles: " + err);
 					res.json({ result: false });
 				}
-				res.json({ result: true, data:roles });
+				res.json({ result: true, data: roles });
 			});
 		},
 

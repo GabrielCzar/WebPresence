@@ -9,3 +9,8 @@ docker build -t <app name> .
 ```
 docker run -p 3000:3000 -d <app name>
 ```
+
+### Run Mongo Shell
+```
+ docker exec -it webpresence_mongo_1 mongo
+```

@@ -6,8 +6,8 @@ module.exports = function(app){
 	var team = Schema({
 		date_init: { type: Date, required: true },
 		date_end:  { type: Date, required: true },
-		trainees: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-		days: [{ type: Schema.Types.ObjectId, ref: 'Day' }],
+		trainees: [{ type: ObjectId, ref: 'User' }],
+		days: [{ type: ObjectId, ref: 'Day' }],
         mac_ap : { type: String, required: true },
         name: { type: String },
         distance: { type: Number },

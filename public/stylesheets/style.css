@@ -6,6 +6,17 @@ a {
   color: #00B7FF;
 }
 
+.x-container {
+  padding: 0 10px; 
+}
+
+.x-select {
+  font-size: 16px;
+  outline-color: #00bfa5;
+  padding: 7px; 
+  cursor: pointer;
+}
+
 .mg-left-s2{
   margin-left: 8px;
 }

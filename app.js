@@ -6,14 +6,20 @@ var express = require('express')
 , path = require('path')
 , methodOverride = require('method-override')
 , cookieParser = require('cookie-parser')
-, role = require('./models/role')
 , router = express.Router()
 , app = express();
+
+var seed = require('./config/seed')
+
 
 // Mongo DB
 mongoose.connect('mongodb://mongo:27017/presence_db', { poolSize: 10 })
   .then(
-  	() => console.log('Connected to db'),
+  	() => {
+  		console.log('Connected to db');
+  		// Use na primeira vez para prencher com os dados basicos
+  		//seed();	
+	},
   	err => console.log('Error in connection')
  );
 
