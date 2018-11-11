@@ -1,5 +1,5 @@
 module.exports = function(app){
-	var trainee = app.controllers.user;
+	const trainee = app.controllers.user;
 
 	app.get('/trainee', trainee.getAllTrainees);
 	app.get('/trainee/presence/:idTeam/:idTrainee', trainee.getTeamPresence);
@@ -7,4 +7,4 @@ module.exports = function(app){
     app.post('/trainee/presence/device', trainee.checkPresenceDevice);
 	app.post('/trainee', trainee.createAccount);
 
-}
+};

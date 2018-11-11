@@ -1,15 +1,15 @@
-module.exports = function(app){
-	var mongoose = require('mongoose');
-	var Schema = mongoose.Schema;
+module.exports = () => {
+    const mongoose = require('mongoose');
+	const Schema = mongoose.Schema;
 
-	var role = Schema({
-		name: String,
-		type: String
+	const roleSchema = Schema({
+		name: { type: String, required: true },
+		type: { type: String, required: true, unique: true }
 	});
 
-	role.statics.getRoleByType = function(type, callback) {
-		this.findOne({ type: type }).exec(callback);
+	roleSchema.statics.getRoleByType = function(type, callback) {
+		return this.findOne({ type: type }).exec(callback);
 	};
 
-	return global.db.model('Role', role);
-}
+	return mongoose.model('Role', roleSchema);
+};

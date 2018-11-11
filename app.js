@@ -1,33 +1,28 @@
-var express = require('express')
-, load = require('express-load')
-, bodyParser = require('body-parser')
-, mongoose = require('mongoose')
-, session = require('express-session')
-, path = require('path')
-, methodOverride = require('method-override')
-, cookieParser = require('cookie-parser')
-, router = express.Router()
-, app = express();
+'use strict';
 
-var seed = require('./config/seed')
+/** @namespace app.controllers */
 
+const methodOverride = require('method-override');
+const cookieParser = require('cookie-parser');
+const mongooseSeed = require('./config/seed');
+const session = require('express-session');
+const { log, error } = require('console');
+const bodyParser = require('body-parser');
+const load = require('express-load');
+const mongoose = require('mongoose');
+const express = require('express');
+const router = express.Router({});
+const path = require('path');
+const app = express();
 
-// Mongo DB
-mongoose.connect('mongodb://mongo:27017/presence_db', { poolSize: 10 })
-  .then(
-  	() => {
-  		console.log('Connected to db');
-  		// Use na primeira vez para prencher com os dados basicos
-  		//seed();	
-	},
-  	err => console.log('Error in connection')
- );
+mongoose.connect(`mongodb://${process.env.MONGO || 'mongo:27017'}/presence_db`, { poolSize: 10 })
+    .then(() => { log('Connected to database => presence_db.'); mongooseSeed(); })
+    .catch(e => error('Error to establish connection with database. ' + e.message));
 
 // Connection global access
-global.db = mongoose.connection; 
+global.db = mongoose.connection;
 
-// Configuration
-app.set('port', process.env.PORT || 3000);
+// Configurations
 app.set('views', path.join(__dirname + '/views'));
 app.engine('html', require('ejs').renderFile);
 app.set('view engine', 'html');
@@ -38,8 +33,7 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(session({ resave: true, saveUninitialized: true, secret: 'your secret here'}));
 app.use(router);
-// End Configuration
 
 load('models').then('controllers').then('routes').into(app);
 
-app.listen(app.get('port'), () => console.log("PresenceWeb Server is Online..."));
+app.listen(process.env.PORT || 3000, () => log("PresenceWeb Server is Online..."));

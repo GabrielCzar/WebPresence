@@ -1,98 +1,57 @@
-module.exports = function(app){
+module.exports = (app) => {
+	const Team = app.models.team;
+    const Day = app.models.day;
 
-	var Team = app.models.team;
-    var Day = app.models.day;
-    var async = require('async');
+    return {
 
-    var strToDate = function (dateStr) {
-        var parts = dateStr.split("/");
-        return new Date(parts[2], parts[1] - 1, parts[0]);
-    };
+        getAll: (req, res) => Team.getAll((err, teams) => err ? res.json({ result: false, teams: [] }) : res.json({ result: true, teams })),
 
+        create: function (req, res) {
+            const team = req.body;
 
-    var TeamController = {
+            const trainees = [];
 
-        getAll: function(req, res){
-			Team.getAll(function(err, teams){
-				if(err)
-					return res.json({result:false});
-				return res.json({result:true , data: teams});
-			});
-		},
+            team.trainees.forEach(trainee => trainees.push(trainee._id));
 
-		create: function (req, res) {
-            var team = req.body;
+            const days = [];
 
-            var trainees = [];
-
-            team.trainees.forEach(function(trainee){
-                trainees.push(trainee._id);
-            });
-
-            var days = [];
-
-            async.forEach(team.days, function(day, callback){
-                Day.create(day, function(err, day){
-                    if(err) {
-                        console.log(err);
-                    }else {
-                        days.push(day._id);
-                    }
+            require('async').forEach(team.days, (day, callback) => {
+                Day.create(day, (err, day) => {
+                    err ? console.log(err) : days.push(day._id);
                     callback();
                 });
-            }, function() {
-                //Formatting the datas to yyyy/MM/dd
+            }, () => {
+                // Formatting the date to yyyy/MM/dd
                 console.log(team.date_init);
                 console.log(team.date_end);
 
                 team.date_init = strToDate(team.date_init);
                 team.date_end = strToDate(team.date_end);
 
-                Team.create(team, trainees, days, function(err, team){
-                    if(err) {
-                        console.log(err);
-                        return res.json({result: false});
-                    }
-                    return res.json({result: true, data: team});
-
-                });
+                Team.create(team, trainees, days, (err, team) => err ? res.json({result: false}) : res.json({result: true, data: team}));
             });
 
-		},
-        
-        getTraineeTeams: function (req, res) {
-            var _idTrainee = req.params.idTrainee;
-            Team.getTraineeTeams(_idTrainee, function(err, teams){
-                if(err) {
-                    console.log(err);
-                    return res.json({result: false});
-                }
-                return res.json({result: true, data: teams});
-            });
         },
 
+        getTraineeTeams: function (req, res) {
+            const _idTrainee = req.params.idTrainee;
+            Team.getTraineeTeams(_idTrainee, (err, teams) => err ? res.json({ result: false }) : res.json({ result: true, data: teams }));
+        },
 
         //This function return true if the team works at today, false otherwise.
-        haveWorkToday : function(req, res){
-            var idTeam = req.params.idTeam;
-            var today =  new Date();
-            
-            Team.findByIdAndDay(idTeam, today.getDay(), function(err, team){
-                if(err){
-                    console.log(err);
-                    res.json({result:false});
-                }else{
-                    if(team){
-                        res.json({result:true});
-                    }else{
-                        res.json({result:false});
-                    }
-                }
-            });
+        haveWorkToday: function (req, res) {
+            const idTeam = req.params.idTeam;
+            const today = new Date();
 
+            Team.findByIdAndDay(idTeam, today.getDay(), (err, team) =>
+                err ? res.json({ result: false }) :
+                    (team ? res.json({ result: true }) : res.json({ result: false })));
         },
-	};
+    };
 
-	return TeamController;
+};
 
-}
+const strToDate = function (dateStr) {
+    const parts = dateStr.split("/");
+    return new Date(parts[2], parts[1] - 1, parts[0]);
+};

@@ -1,22 +1,29 @@
-module.exports = function () {
-	var Role = require('mongoose').model('Role');
+'use strict';
 
-	console.log('Seeding data...');
+module.exports = () => {
 
-	var Trainee = new Role({
-		name: 'Trainee',
-		type: 'TRAINEE'
-	});
+    const Role = require('mongoose').model('Role');
 
-	var Admin = new Role({
-		name: 'Admin',
-		type: 'ADMIN'
-	});
+    console.log('Seeding data...');
 
-	Trainee.save(err => 
-		err ? console.log('Error in save Trainee') : console.log('Save Trainee'));
+    const TraineeRole = new Role({
+        name: 'Trainee',
+        type: 'TRAINEE'
+    });
 
-	Admin.save(err => 
-		err ? console.log('Error in save Admin') : console.log('Save Admin'));
+    const AdminRole = new Role({
+        name: 'Admin',
+        type: 'ADMIN'
+    });
 
+    Role.getRoleByType('TRAINEE', (err, res) => saveNewRoleIfNotExists(err, res, TraineeRole));
+    Role.getRoleByType('ADMIN', (err, res) => saveNewRoleIfNotExists(err, res, AdminRole));
+
+};
+
+function saveNewRoleIfNotExists(err, roleFound, newRole) {
+    if (err) console.error(`Error in save ${message}. ${err.message}`);
+    else if (!roleFound) newRole.save(err => err ? console.debug(`Error in save Role ${newRole.name}. ${err.message}`) : console.debug(`Role ${newRole.name} saved.`));
+    else console.debug(`Role ${newRole.name} has been created previously`);
 }
+
