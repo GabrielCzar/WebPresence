@@ -1,8 +1,8 @@
 module.exports = function (app) {
-    var mongoose = require('mongoose');
-    var Schema = mongoose.Schema;
+    const mongoose = require('mongoose');
+    const Schema = mongoose.Schema;
     
-    var day = Schema({
+    const day = Schema({
         date: { day_name: String, id: Number },
         time_init: { type: String, required: true },
         time_end:  { type: String, required: true },
@@ -10,7 +10,7 @@ module.exports = function (app) {
     });
 
     day.statics.create = function (day, callback) {
-        var _day = new this();
+        const _day = new this();
         _day.date = { day_name: day.name, id: day.id };
         _day.time_init = day.time_init;
         _day.time_end = day.time_end;
@@ -20,4 +20,4 @@ module.exports = function (app) {
     };
 
     return global.db.model('Day', day);
-}
+};

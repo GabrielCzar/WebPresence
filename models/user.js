@@ -1,12 +1,10 @@
 module.exports = function(app){
 
-	var mongoose = require('mongoose');
-	var Schema =  mongoose.Schema;
-    var ObjectId = Schema.Types.ObjectId;
+	const mongoose = require('mongoose');
+	const Schema =  mongoose.Schema;
+    const Role = app.models.role;
 
-    var Role = app.models.role;
-
-	var user = Schema({
+	const user = Schema({
 		name : 	{ type: String, required: true },
 		phone_mac : [{ type: String }],
 		email: String,
@@ -16,22 +14,20 @@ module.exports = function(app){
 	});
 	
 	user.statics.checkLogin = function (user, callback) {
-        var self = this;
+        const self = this;
         Role.getRoleByType(user.role.type, function(err, role){
-        	var query = {username: user.username, pass: user.pass, 'roles' : role._id};
+        	const query = {username: user.username, pass: user.pass, 'roles' : role._id};
 			self.findOne(query).populate('roles').exec(callback);
         });
 	};
 
-	user.statics.getAllTrainees = function (callback) {
-        //GET TRAINEE'S ROLE ID
-        var query = { "roles" : ObjectId("57a9b7eb6153dcaea68e2277") };
-        
-		this.find(query).populate('roles').exec(callback);
+	user.statics.getAllTrainees = async function (callback) {
+        const traineeRole = await Role.getRoleByType('TRAINEE');
+        this.find({ roles: traineeRole._id }).populate('roles').exec(callback);
 	};
 
 	user.statics.insert = function (user, callback) {
-		var _user = new this();
+		const _user = new this();
 
 		Role.getRoleByType(user.role.type, (err, role) => {
 			_user.name = user.name;
@@ -43,8 +39,8 @@ module.exports = function(app){
         	_user.save(callback);
         });
 		
-	}
+	};
 
 	return global.db.model('User', user);
 
-}
+};

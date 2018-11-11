@@ -1,9 +1,9 @@
 module.exports = function(app){
-    var mongoose = require('mongoose');
-	var Schema = mongoose.Schema;
-    var ObjectId = mongoose.Schema.Types.ObjectId;
+    const mongoose = require('mongoose');
+	const Schema = mongoose.Schema;
+    const ObjectId = Schema.Types.ObjectId;
 
-	var team = Schema({
+	const team = Schema({
 		date_init: { type: Date, required: true },
 		date_end:  { type: Date, required: true },
 		trainees: [{ type: ObjectId, ref: 'User' }],
@@ -11,7 +11,8 @@ module.exports = function(app){
         mac_ap : { type: String, required: true },
         name: { type: String },
         distance: { type: Number },
-        percent: { type: Number }
+        percent: { type: Number },
+        detect_type: { type: String }
 	});
 
 	team.statics.getAll = function (callback) {
@@ -34,8 +35,8 @@ module.exports = function(app){
                 if(!team) {
                     callback(null, null)
                 }else {
-                    var sameDay = team.days.some(function (day) {
-                        return day.date.id == idDay;
+                    const sameDay = team.days.some(function (day) {
+                        return day.date.id === idDay;
                     });
                     if (sameDay) {
                         callback(null, team)
@@ -49,7 +50,7 @@ module.exports = function(app){
     };
 
 	team.statics.create = function (team, trainees, days, callback) {
-        var _team = new this();
+        const _team = new this();
         _team.date_init = team.date_init;
         _team.date_end = team.date_end;
         _team.trainees = [];
@@ -67,4 +68,4 @@ module.exports = function(app){
 
 	return global.db.model('Team', team);
 
-}
+};

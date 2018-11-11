@@ -6,16 +6,7 @@ module.exports = (app) => {
 
     return {
 
-        getAllTrainees: function (req, res) {
-            User.getAllTrainees(function (err, trainees) {
-                if (err) {
-                    console.log("Err get all trainees: " + err);
-                    return res.json({trainees: []});
-                }
-                return res.json({trainees: trainees});
-
-            });
-        },
+        getAllTrainees: async (req, res) => await User.getAllTrainees((err, trainees) => err ? res.json({ result: false, trainees: []}) : res.json({ result: true, trainees: trainees })),
 
         createAccount: function (req, res) {
             const user = req.body;

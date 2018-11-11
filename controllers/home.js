@@ -5,9 +5,7 @@ module.exports = (app) => {
 
     return {
 
-        index: function (req, res) {
-            res.render('index');
-        },
+        index: (req, res) => res.render('index'),
 
         getRoles: function (req, res) {
             Role.find({}, function (err, roles) {

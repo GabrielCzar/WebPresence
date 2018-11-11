@@ -1,9 +1,9 @@
 module.exports = function () {
-    var mongoose = require('mongoose');
-	var Schema = mongoose.Schema;
-	var ObjectId = mongoose.Schema.Types.ObjectId;
+    const mongoose = require('mongoose');
+	const Schema = mongoose.Schema;
+	const ObjectId = mongoose.Schema.Types.ObjectId;
 
-	var presence = Schema({
+	const presence = Schema({
 		date : { type: Date, default: Date.now },
 		trainee: { type: Schema.Types.ObjectId, ref: 'User' },
 		team: { type: Schema.Types.ObjectId, ref: 'team' },
@@ -15,7 +15,6 @@ module.exports = function () {
 	});
 
 	presence.statics.getTraineePresences = function (idTeam, idTrainee, callback) {
-		idTeam = idTeam;
 		idTrainee = ObjectId(idTrainee);
 		this.find({'team' : idTeam, 'trainee':idTrainee}).exec(callback);
 	};
@@ -24,8 +23,8 @@ module.exports = function () {
         idTrainee = ObjectId(idTrainee);
         idTeam = ObjectId(idTeam);
 
-        var initDay = new Date();
-        var endDay = new Date();
+        const initDay = new Date();
+        const endDay = new Date();
 
         //Setting the hours to 24 to get all presences until 00hrs
         initDay.setHours(1);
@@ -36,7 +35,7 @@ module.exports = function () {
 
 
     presence.statics.doThePresence = function (idTrainee, idTeam, percents, callback) {
-        var _pres = new this();
+        const _pres = new this();
         _pres.team = idTeam;
         _pres.trainee = ObjectId(idTrainee);
         _pres.checks = 1;
