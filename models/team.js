@@ -20,7 +20,7 @@ module.exports = function(app){
 	};
 
     team.statics.getTraineeTeams = function (_idTrainee, callback) {
-        this.find({'trainees' : ObjectId(_idTrainee) }).populate('days').populate('trainees').exec(callback);
+        this.find({'trainees' : mongoose.Types.ObjectId(_idTrainee) }).populate('days').populate('trainees').exec(callback);
     };
 
     team.statics.findById = function (idTeam, callback) {
@@ -60,7 +60,7 @@ module.exports = function(app){
         _team.distance = team.distance;
         _team.percent = team.percent;
 
-        trainees.forEach(_idTrainee => _team.trainees.push(ObjectId(_idTrainee)));
+        trainees.forEach(_idTrainee => _team.trainees.push(mongoose.Types.ObjectId(_idTrainee)));
 
         _team.save(callback);
 

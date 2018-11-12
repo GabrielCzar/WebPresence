@@ -3,8 +3,14 @@
 		<div class="x-container">
 		  <a href="/#/" class="brand-logo">PresenceWeb</a>
 		  <ul id="nav-mobile" class="right hide-on-med-and-down">
-		    <li><a href="/#/">Sair</a></li>
+		    <li><a href="/#/" id="btnLogout">Sair</a></li>
 		  </ul>
 		</div>
 	</div>
 </nav>
+
+<script>
+    const btnLogout = document.querySelector('#btnLogout');
+
+    btnLogout.style.visibility = document.location.href.endsWith('/#/') ? 'hidden' : 'visible';
+</script>

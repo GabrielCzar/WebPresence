@@ -6,12 +6,32 @@ module.exports = () => {
 
     createRoles(mongoose);
     createTeam(mongoose);
+    createAdmin(mongoose);
 
     console.log('End seeding data...');
 };
 
+function createAdmin(mongoose) {
+    const User = mongoose.model('User');
+    const Role = mongoose.model('Role');
+
+    Role.getRoleByType('ADMIN', (err, role) => {
+        if (err) {console.error('Error to create admin.', err); return; }
+        const userAdmin = new User({
+            name : 'Admin',
+            email: 'admin@admin.com',
+            username: 'admin@admin',
+            pass: 'admin@pass',
+            roles: [ role ]
+        });
+
+        userAdmin.save(err => saveCallback(err, 'User', userAdmin.name))
+    });
+}
+
 function createTeam(mongoose) {
     const Team = mongoose.model('Team');
+    const Day = mongoose.model('Day');
 
     const endDate = new Date();
     endDate.setFullYear(endDate.getFullYear() + 1);
@@ -28,7 +48,22 @@ function createTeam(mongoose) {
         detect_type: 'BLE'
     });
 
-    GMTeam.save(err => saveCallback(err, 'Team', GMTeam.name));
+    Team.findOne({ name: 'GMTeam' }).exec((err, result) => {
+        if (!result) {
+            const dayUtil = require('../util/day-util');
+
+            const GMDay = new Day({
+                date: { day_name: dayUtil.WEDNESDAY.name, id: dayUtil.WEDNESDAY },
+                time_init: '08:00',
+                time_end:  '12:00',
+                check_presence: [{ time_init: '08:30', duration: '45' }, { time_init: '10:45', duration: '30' }]
+            });
+
+            Team.create(GMTeam, [], [GMDay], (err => saveCallback(err, 'Team', GMTeam.name)));
+
+        }
+    });
+
 }
 
 function createRoles(mongoose) {

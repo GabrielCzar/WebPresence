@@ -21,8 +21,7 @@ module.exports = (app) => {
             console.log("CheckLogin Called");
 
             const user = req.body;
-            console.log("USER: ");
-            console.log(user);
+            console.log("USER: ", user.name, user.role);
 
             User.checkLogin(user, function (err, userDB) {
                 if (err || !userDB) {

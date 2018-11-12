@@ -8,7 +8,7 @@ module.exports = function(app){
 		name : 	{ type: String, required: true },
 		phone_mac : [{ type: String }],
 		email: String,
-		username: { type: String, required: true },
+		username: { type: String, required: true, unique: true },
 		pass: { type: String, required: true },
 		roles: [{ type: Schema.Types.ObjectId, ref: 'Role' }]
 	});

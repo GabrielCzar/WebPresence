@@ -1,9 +1,12 @@
+
 angular.module("app").controller("AdminController", function($scope, teamService, traineeService, $stateParams, toastService, $state){
 
-    //VARIABLES
+    //constIABLES
     $scope.admin = $stateParams.userLogged;
     $scope.teams = [];
 	$scope.trainees = [];
+    $scope.checkTime = undefined;
+    $scope.daySelected = undefined;
 
     $scope.tempTeam = {name : "", date_init : null, date_end : null, days : [], trainees : []};
 
@@ -19,7 +22,7 @@ angular.module("app").controller("AdminController", function($scope, teamService
 
 
     //FUNCTIONS
-    var getAllTeams = function(){
+    const getAllTeams = function(){
         teamService.getAll().then(function(response){
             console.log(response);
             if(response.data.result){
@@ -29,10 +32,11 @@ angular.module("app").controller("AdminController", function($scope, teamService
             }
         });
     };
+
     getAllTeams();
 
 	$scope.isTeamsEmpty = function(){
-		return $scope.teams.length == 0;
+		return $scope.teams.length === 0;
 	};
 
 	$scope.isThereAnyTrainees = function(){
@@ -41,17 +45,14 @@ angular.module("app").controller("AdminController", function($scope, teamService
 
 	traineeService.getAllTrainees().then(function(response){
 		$scope.trainees = response.data.trainees;
-		
+
 		if(!$scope.trainees || !$scope.trainees > 0)
             toastService.showMessage("Nao há nenhum estagiário cadastrado ate o momento!", 5000);
 	});
 
 	//ADD TEAM FUNCTIONS
     $scope.createTeam = function(tempTeam){
-        var selectedTrainees = $scope.trainees.filter(function(trainee){
-            return trainee.selected;
-        });
-        tempTeam.trainees = selectedTrainees;
+        tempTeam.trainees = $scope.trainees.filter((trainee) => trainee.selected);
         teamService.createTeam(tempTeam).then(function(response){
             if(response.data.result){
                 $state.go("homeAdmin");
@@ -63,7 +64,7 @@ angular.module("app").controller("AdminController", function($scope, teamService
     };
 
     $scope.addCheckTime = function(checkTime){
-        var cpCheckTime = angular.copy(checkTime);
+        const cpCheckTime = angular.copy(checkTime);
         delete($scope.checkTime);
         $scope.daySelected.checkTimes.push(cpCheckTime);
     };
@@ -73,13 +74,13 @@ angular.module("app").controller("AdminController", function($scope, teamService
     };
 
     $scope.addTeamDay = function(daySelected){
-        var cpDaySelected = angular.copy(daySelected);
+        const cpDaySelected = angular.copy(daySelected);
         $scope.tempTeam.days.push(cpDaySelected);
     };
 
     $scope.getButtonDayColor = function(day){
         return (day.checkTimes.length > 0 && day.time_init && day.time_end ) ? "green" : "purple";
-    }
+    };
 
     //MODAL FUNCTIONS
 	$scope.openModalDay = function(day){

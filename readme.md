@@ -1,5 +1,5 @@
 # Web Presence
-_See wiki to access the endpoints that exits._
+_An WebApp to manage the presences._
 
 ### Run Application
 
@@ -9,7 +9,7 @@ docker-compose up
 
 ### Run Mongo Shell
 ```
- docker exec -it webpresence_mongo_1 mongo
+ docker exec -it webpresence_mongo_[ID_INSTACE] mongo
 ```
 
 ### Endpoints

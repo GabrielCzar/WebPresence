@@ -10,11 +10,11 @@
                     </div>
 
                      <div class="input-field col s3">
-                        <input type="text" id="date_init" ng-model="tempTeam.date_init">
+                        <input type="text" id="date_init" ng-model="tempTeam.date_init" placeholder="yyyy/MM/dd" maxlength="10">
                         <label for="date_init">Data de Inicio</label>
                     </div>
                     <div class="input-field col s3">
-                        <input type="text" id="date_end" ng-model="tempTeam.date_end">
+                        <input type="text" id="date_end" ng-model="tempTeam.date_end" placeholder="yyyy/MM/dd" maxlength="10">
                         <label for="date_end">Data de Fim</label>
                     </div>
 
@@ -22,10 +22,18 @@
                 
                 <h5>Configuraçao para Presença</h5>
                 <div class="row">
-                    <div class="input-field col s6">
+                    <div class="input-field col s3">
                         <input type="text" id="mac_ap" ng-model="tempTeam.mac_ap">
                         <label for="mac_ap">MAC do AP</label>
                     </div>
+                    <div class="input-field col s3">
+                        <select class="browser-default x-select" ng-model="tempTeam.detect_type">
+                            <option value disabled>Selecione o Tipo de detecção</option>
+                            <option value="WIFI" select="selected">WiFi</option>
+                            <option value="BLE">Bluetooth Low Energy</option>
+                        </select>
+                    </div>
+
                     <div class="input-field col s3">
                         <input type="text" id="min_percent" ng-model="tempTeam.percent">
                         <label for="min_percent">Porcentagem Minima</label>
