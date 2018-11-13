@@ -10,17 +10,17 @@
                     </div>
 
                      <div class="input-field col s3">
-                        <input type="text" id="date_init" ng-model="tempTeam.date_init" placeholder="yyyy/MM/dd" maxlength="10">
+                        <input type="text" class="datepicker" id="date_init" ng-model="tempTeam.date_init" maxlength="10">
                         <label for="date_init">Data de Inicio</label>
                     </div>
                     <div class="input-field col s3">
                         <input type="text" id="date_end" ng-model="tempTeam.date_end" placeholder="yyyy/MM/dd" maxlength="10">
                         <label for="date_end">Data de Fim</label>
                     </div>
-
                 </div>
                 
                 <h5>Configuraçao para Presença</h5>
+
                 <div class="row">
                     <div class="input-field col s3">
                         <input type="text" id="mac_ap" ng-model="tempTeam.mac_ap">
@@ -35,11 +35,11 @@
                     </div>
 
                     <div class="input-field col s3">
-                        <input type="text" id="min_percent" ng-model="tempTeam.percent">
+                        <input type="text" id="min_percent" ng-model="tempTeam.percent" maxlength="3">
                         <label for="min_percent">Porcentagem Minima</label>
                     </div>
                     <div class="input-field col s3">
-                        <input type="text" id="min_distance" ng-model="tempTeam.distance">
+                        <input type="text" id="min_distance" ng-model="tempTeam.distance" maxlength="3">
                         <label for="min_distance">Distancia Minima (Metros)</label>
                     </div>
                 </div>
@@ -47,7 +47,7 @@
                 <h5>Dias da Semana</h5>
                 <div class="row">
                     <div class="input-field col s12">
-                        <a ng-repeat="day in daysOfWeek" ng-class="getButtonDayColor(day)" class='btn mg-left-s2' modal href="#modalDay" ng-click="openModalDay(day)">
+                        <a ng-repeat="day in daysOfWeek" ng-class="getButtonDayColor(day)" class='btn mg-left-s2' data-target='modalDay' modal href="#modalDay" ng-click="openModalDay(day)">
                             {{day.name}}
                         </a>
                     </div>
@@ -101,11 +101,11 @@
                 <div class="row">
                     <div class="input-field col s6">
                         <label for="input_daystarttime">Hora de Início</label>
-                        <input id="input_daystarttime" type="text" ng-model="daySelected.time_init">
+                        <input id="input_daystarttime" class="timepicker" type="time" data-default="13:40" ng-model="daySelected.time_init">
                     </div>
                     <div class="input-field col s6">
                         <label for="input_dayendtime">Hora de Fim</label>
-                        <input id="input_dayendtime" type="text" ng-model="daySelected.time_end">
+                        <input id="input_dayendtime" class="timepicker" type="time" data-default="13:40" ng-model="daySelected.time_end">
                     </div>
 
                 </div>
@@ -116,10 +116,10 @@
                 <div class="row">
                     <div class="input-field col s4">
                         <label for="input_checkinittime">Hora de Início</label>
-                        <input id="input_checkinittime" type="text" ng-model="checkTime.time_init">
+                        <input id="input_checkinittime" class="timepicker" type="time" data-default="13:40" ng-model="checkTime.time_init">
                     </div>
                     <div class="input-field col s4">
-                        <input id="input_checkduration" type="text" ng-model="checkTime.duration">
+                        <input id="input_checkduration" type="number" ng-model="checkTime.duration" maxlength="3">
                         <label for="input_checkduration">Duração em Minutos</label>
                     </div>
                     <div class="input-field col s4">
@@ -159,3 +159,6 @@
         <a class="btn-flat waves-red waves-effect modal-action modal-close" ng-click="addTeamDay(daySelected)" >Cadastrar Dia</a>
     </div>
 </div>
+
+
+<script type="text/javascript" src="../../javascripts/config/actions.js"></script>

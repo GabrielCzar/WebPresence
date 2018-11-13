@@ -1,6 +1,6 @@
 angular.module("app").controller("TraineeController", function($scope, loginServiceAPI, traineeService, $state, $stateParams, toastService, teamService){
 
-    //VARIABLES
+    //constIABLES
     //Get the trainee id
     $scope.trainee = {_id: $stateParams.userId, role:{}};
     $scope.teams = [];
@@ -16,7 +16,7 @@ angular.module("app").controller("TraineeController", function($scope, loginServ
     haveWorkToday();
 
     $scope.isTeamsEmpty = function(){
-        return $scope.teams.length == 0;
+        return $scope.teams.length === 0;
     };
     
     function haveWorkToday() {
@@ -26,7 +26,7 @@ angular.module("app").controller("TraineeController", function($scope, loginServ
                 console.log(response);
                 $scope.showButtonCheckPresence = response.result;
             });
-    };
+    }
 
     $scope.checkPresence = function(){
         traineeService.checkPresence($scope.trainee._id, $scope.teamSelected._id).success(function(response){
@@ -42,21 +42,19 @@ angular.module("app").controller("TraineeController", function($scope, loginServ
     };
 
     function getTraineePresences(){
-        var teamId = $stateParams.teamId;
+        const teamId = $stateParams.teamId;
         if(teamId) {
             traineeService.getTeamPresence(teamId, $scope.trainee._id).success(function (response) {
                 if (response.result) {
                     $scope.presences = response.data;
 
-                    var today = new Date();
+                    const today = new Date();
 
                     //CHECKING IF THE USER HAS THE PRESENCE FOR TODAY
                     //IF HE DOES, THE BUTTOM TO CONFIRM PRESENCE WILL DISAPEAR
-                    var res = response.data.some(function(pres){
-                        return (new Date(pres.date)).getDay() == today.getDay();
+                    $scope.showButtonCheckPresence = response.data.some(function (pres) {
+                        return (new Date(pres.date)).getDay() === today.getDay();
                     });
-
-                    $scope.showButtonCheckPresence = res;
 
 
                 } else {
@@ -68,7 +66,7 @@ angular.module("app").controller("TraineeController", function($scope, loginServ
 
     function getSelectedTeam(){
         return $scope.teams.filter(function(team){
-            return team._id == $stateParams.teamId;
+            return team._id === $stateParams.teamId;
         })[0];
     }
 
@@ -79,25 +77,24 @@ angular.module("app").controller("TraineeController", function($scope, loginServ
             $scope.teamSelected = getSelectedTeam();
 
         });
-    };
-
+    }
 
     function getAllRoles(){
         loginServiceAPI.getRoles().success(function(response){
-            var result = response.result;
+            const result = response.result;
             if(result){
                 $scope.roles = response.data;
             }else{
                 console.error("Error get all Roles!");
             }
         });
-    };
+    }
 
 	$scope.createAccount = function(trainee){
 
 
            // //Setting the trainee role.
-           // var roleTrainee = $scope.roles.filter(function(role){
+           // const roleTrainee = $scope.roles.filter(function(role){
            //     return role.type == "TRAINEE";
            // }) ;
 
