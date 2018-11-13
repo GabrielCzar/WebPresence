@@ -21,12 +21,9 @@ module.exports = (app) => {
                     callback();
                 });
             }, () => {
-                // Formatting the date to yyyy/MM/dd
+
                 console.log(team.date_init);
                 console.log(team.date_end);
-
-                team.date_init = strToDate(team.date_init);
-                team.date_end = strToDate(team.date_end);
 
                 Team.create(team, trainees, days, (err, team) => err ? res.json({result: false}) : res.json({result: true, data: team}));
             });
@@ -49,9 +46,4 @@ module.exports = (app) => {
         },
     };
 
-};
-
-const strToDate = function (dateStr) {
-    const parts = dateStr.split("/");
-    return new Date(parts[2], parts[1] - 1, parts[0]);
 };

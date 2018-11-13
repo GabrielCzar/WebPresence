@@ -5,6 +5,7 @@ angular.module("app").factory("teamService", function($http){
 	};
 
 	const _createTeam = function(team){
+		console.log('CREATE TEAM', team);
 		return $http.post('/team', team);
 	};
 

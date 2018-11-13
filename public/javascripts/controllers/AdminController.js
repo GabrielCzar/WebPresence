@@ -8,7 +8,7 @@ angular.module("app").controller("AdminController", function($scope, teamService
     $scope.checkTime = undefined;
     $scope.daySelected = undefined;
 
-    $scope.tempTeam = {name : "", date_init : null, date_end : null, days : [], trainees : []};
+    $scope.tempTeam = {name : "", date_init : new Date(), date_end : new Date(), days : [], trainees : []};
 
 	$scope.daysOfWeek = [
         {name:"Segunda", id: 1, checkTimes : []},
@@ -87,5 +87,9 @@ angular.module("app").controller("AdminController", function($scope, teamService
 		$scope.daySelected = day;
 	};
 
-	
+	$scope.onCloseDate = function () {
+        $scope.tempTeam.date_init = new Date($('#date_init').val().toString());
+        $scope.tempTeam.date_end = new Date($('#date_end').val().toString());
+    };
+
 });

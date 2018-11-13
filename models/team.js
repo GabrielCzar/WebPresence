@@ -59,6 +59,7 @@ module.exports = function(app){
         _team.name = team.name;
         _team.distance = team.distance;
         _team.percent = team.percent;
+        _team.detect_type = team.detect_type;
 
         trainees.forEach(_idTrainee => _team.trainees.push(mongoose.Types.ObjectId(_idTrainee)));
 

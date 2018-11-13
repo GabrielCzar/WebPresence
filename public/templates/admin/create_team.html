@@ -10,11 +10,11 @@
                     </div>
 
                      <div class="input-field col s3">
-                        <input type="text" class="datepicker" id="date_init" ng-model="tempTeam.date_init" maxlength="10">
+                        <input type="text" id="date_init" input-date  on-close="onCloseDate()" ng-model="tempTeam.date_init" maxlength="10">
                         <label for="date_init">Data de Inicio</label>
                     </div>
                     <div class="input-field col s3">
-                        <input type="text" id="date_end" ng-model="tempTeam.date_end" placeholder="yyyy/MM/dd" maxlength="10">
+                        <input type="text" id="date_end" input-date on-close="onCloseDate()" ng-model="tempTeam.date_end" maxlength="10">
                         <label for="date_end">Data de Fim</label>
                     </div>
                 </div>
@@ -27,19 +27,20 @@
                         <label for="mac_ap">MAC do AP</label>
                     </div>
                     <div class="input-field col s3">
-                        <select class="browser-default x-select" ng-model="tempTeam.detect_type">
+                        <select class="browser-default x-select" ng-model="tempTeam.detect_type" material-select>
                             <option value disabled>Selecione o Tipo de detecção</option>
                             <option value="WIFI" select="selected">WiFi</option>
                             <option value="BLE">Bluetooth Low Energy</option>
+                            <option value="HYBRID">Hybrid</option>
                         </select>
                     </div>
 
                     <div class="input-field col s3">
-                        <input type="text" id="min_percent" ng-model="tempTeam.percent" maxlength="3">
+                        <input type="number" id="min_percent" ng-model="tempTeam.percent" maxlength="3">
                         <label for="min_percent">Porcentagem Minima</label>
                     </div>
                     <div class="input-field col s3">
-                        <input type="text" id="min_distance" ng-model="tempTeam.distance" maxlength="3">
+                        <input type="number" id="min_distance" ng-model="tempTeam.distance" maxlength="3">
                         <label for="min_distance">Distancia Minima (Metros)</label>
                     </div>
                 </div>
