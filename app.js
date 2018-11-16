@@ -15,7 +15,7 @@ const router = express.Router({});
 const path = require('path');
 const app = express();
 
-mongoose.connect(`mongodb://${process.env.MONGO || 'mongo:27017'}/presence_db`, { poolSize: 10 })
+mongoose.connect(`mongodb://${process.env.MONGO || 'mongo:27017'}/webpresencedb`, { poolSize: 10 })
     .then(() => { log('Connected to database => presence_db.'); mongooseSeed(); })
     .catch(e => error('Error to establish connection with database. ' + e.message));
 
