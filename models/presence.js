@@ -15,7 +15,7 @@ module.exports = function () {
 	});
 
 	presence.statics.getTraineePresences = function (idTeam, idTrainee, callback) {
-		idTrainee = ObjectId(idTrainee);
+		idTrainee = mongoose.Types.ObjectId(idTrainee);
 		this.find({'team' : idTeam, 'trainee':idTrainee}).exec(callback);
 	};
 

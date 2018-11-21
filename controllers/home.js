@@ -11,24 +11,21 @@ module.exports = (app) => {
             Role.find({}, function (err, roles) {
                 if (err) {
                     console.error("Error when trying get all roles: " + err);
-                    res.json({result: false});
+                    res.json({result: false, data: null });
                 } else res.json({result: true, data: roles});
             });
         },
 
         checkLogin: function (req, res) {
-
-            console.log("CheckLogin Called");
-
             const user = req.body;
-            console.log("USER: ", user.name, user.role);
+            console.log("CheckLogin Called | USER: ", user.username, ' | ROLE: ', user.role);
 
             User.checkLogin(user, function (err, userDB) {
-                if (err || !userDB) {
-                    console.error(err + " " + userDB);
-                    return res.json({result: false});
+                if (err !== null || userDB === null) {
+                    console.error('Error: ', err, userDB);
+                    return res.json({ result: false, data: null });
                 }
-                console.log("User: " + userDB + " added to session!");
+                console.log("User: " + userDB.username + " added to session!");
                 req.session.userLogged = userDB;
                 return res.json({result: true, data: userDB});
             });

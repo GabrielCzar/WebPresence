@@ -4,13 +4,13 @@ angular.module("app").controller("AdminController", function($scope, teamService
     //constIABLES
     $scope.admin = $stateParams.userLogged;
     $scope.teams = [];
-	$scope.trainees = [];
+    $scope.trainees = [];
     $scope.checkTime = undefined;
     $scope.daySelected = undefined;
 
     $scope.tempTeam = {name : "", date_init : new Date(), date_end : new Date(), days : [], trainees : []};
 
-	$scope.daysOfWeek = [
+    $scope.daysOfWeek = [
         {name:"Segunda", id: 1, checkTimes : []},
         {name:"Terça",   id: 2, checkTimes : []},
         {name:"Quarta",  id: 3, checkTimes : []},
@@ -22,7 +22,7 @@ angular.module("app").controller("AdminController", function($scope, teamService
 
 
     //FUNCTIONS
-    const getAllTeams = function(){
+    function getAllTeams(){
         teamService.getAll().then(function(response){
             console.log(response);
             if(response.data.result){
@@ -31,26 +31,26 @@ angular.module("app").controller("AdminController", function($scope, teamService
                 toastService.showMessage("Não foi possível pegar todas os Times!", 4000);
             }
         });
-    };
+    }
 
     getAllTeams();
 
-	$scope.isTeamsEmpty = function(){
-		return $scope.teams.length === 0;
-	};
+    $scope.isTeamsEmpty = function(){
+        return $scope.teams.length === 0;
+    };
 
-	$scope.isThereAnyTrainees = function(){
-		return $scope.trainees > 0;
-	};
+    $scope.isThereAnyTrainees = function(){
+        return $scope.trainees > 0;
+    };
 
-	traineeService.getAllTrainees().then(function(response){
-		$scope.trainees = response.data.trainees;
+    traineeService.getAllTrainees().then(function(response){
+        $scope.trainees = response.data.trainees;
 
-		if(!$scope.trainees || !$scope.trainees > 0)
+        if(!$scope.trainees || !$scope.trainees > 0)
             toastService.showMessage("Nao há nenhum estagiário cadastrado ate o momento!", 5000);
-	});
+    });
 
-	//ADD TEAM FUNCTIONS
+    //ADD TEAM FUNCTIONS
     $scope.createTeam = function(tempTeam){
         tempTeam.trainees = $scope.trainees.filter((trainee) => trainee.selected);
         teamService.createTeam(tempTeam).then(function(response){
@@ -83,11 +83,11 @@ angular.module("app").controller("AdminController", function($scope, teamService
     };
 
     //MODAL FUNCTIONS
-	$scope.openModalDay = function(day){
-		$scope.daySelected = day;
-	};
+    $scope.openModalDay = function(day){
+        $scope.daySelected = day;
+    };
 
-	$scope.onCloseDate = function () {
+    $scope.onCloseDate = function () {
         $scope.tempTeam.date_init = new Date($('#date_init').val().toString());
         $scope.tempTeam.date_end = new Date($('#date_end').val().toString());
     };

@@ -4,7 +4,7 @@ module.exports = (app) => {
 
     return {
 
-        getAll: (req, res) => Team.getAll((err, teams) => err ? res.json({ result: false, teams: [] }) : res.json({ result: true, teams })),
+        getAll: (req, res) => Team.getAll((err, teams) => err ? res.json({ result: false, data: [] }) : res.json({ result: true, data: teams })),
 
         create: function (req, res) {
             const team = req.body;
