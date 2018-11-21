@@ -23,6 +23,7 @@ angular.module("app").controller("LoginController", function($scope, loginServic
             const result = response.result;
 
             if (!result){
+                console.error('Result:', result, user.username);
                 toastService.showMessage('Usuario e/ou Senha invalidos!', 4000);
                 return;
             }
