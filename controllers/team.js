@@ -25,7 +25,7 @@ module.exports = (app) => {
                 console.log(team.date_init);
                 console.log(team.date_end);
 
-                Team.create(team, trainees, days, (err, team) => err ? res.json({result: false}) : res.json({result: true, data: team}));
+                Team.create(team, trainees, days, (err, team) => err ? res.json({ result: false, data: null }) : res.json({ result: true, data: team }));
             });
 
         },

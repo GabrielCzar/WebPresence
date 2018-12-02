@@ -8,7 +8,7 @@ module.exports = function(app){
 		date_end:  { type: Date, required: true },
 		trainees: [{ type: ObjectId, ref: 'User' }],
 		days: [{ type: ObjectId, ref: 'Day' }],
-        mac_ap : { type: String, required: true },
+        mac_ap : [{ type: String, required: true }],
         name: { type: String },
         distance: { type: Number },
         percent: { type: Number },

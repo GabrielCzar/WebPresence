@@ -8,7 +8,7 @@ angular.module("app").controller("AdminController", function($scope, teamService
     $scope.checkTime = undefined;
     $scope.daySelected = undefined;
 
-    $scope.tempTeam = {name : "", date_init : new Date(), date_end : new Date(), days : [], trainees : []};
+    $scope.tempTeam = {name : "", date_init : new Date(), date_end : new Date(), days : [], trainees : [] };
 
     $scope.daysOfWeek = [
         {name:"Segunda", id: 1, checkTimes : []},
@@ -52,6 +52,7 @@ angular.module("app").controller("AdminController", function($scope, teamService
 
     //ADD TEAM FUNCTIONS
     $scope.createTeam = function(tempTeam){
+        tempTeam.mac_ap = tempTeam.mac_ap.split(',');
         tempTeam.trainees = $scope.trainees.filter((trainee) => trainee.selected);
         teamService.createTeam(tempTeam).then(function(response){
             if(response.data.result){
