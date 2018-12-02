@@ -11,24 +11,28 @@
         <div class="col s12 m4" ng-repeat="team in teams">
             <div class="card hoverable">
                 <div class="card-content">
-                    <span class="card-title">{{team.name}}</span>
+                    <span class="card-title">{{ team.name }}</span>
                     <div class="row">
                         <p class="col text-bold s5">Data de Início:</p>
-                        <p align="left" class="col s6">{{team.date_init | date: 'dd/MM/yyyy'}}</p>
+                        <p align="left" class="col s6">{{ team.date_init | date: 'dd/MM/yyyy' }}</p>
                     </div>
                     <div class="row">
                         <p class="col text-bold s5">Data de Fim:</p>
-                        <p class="col s6">{{team.date_end | date: 'dd/MM/yyyy'}}</p>
+                        <p class="col s6">{{ team.date_end | date: 'dd/MM/yyyy' }}</p>
                     </div>
                     <div class="row">
                         <p class="col text-bold">Dias da Semana:</p>
                     </div>
                     <div class="row">
-                        <p class="col s2" ng-repeat="day in team.days">{{day.date.day_name}}</p>
+                        <p class="col s2" ng-repeat="day in team.days">{{ day.date.day_name }}</p>
                     </div>
                     <div class="row">
                         <p class="col s7 text-bold">Quantidade de Estagiários:</p>
-                        <p>{{team.trainees.length}}</p>
+                        <p>{{ team.trainees.length }}</p>
+                    </div>
+                    <div class="row">
+                        <p class="col s7 text-bold">Tipo de detecção:</p>
+                        <p>{{ team.mac_ap }}</p>
                     </div>
                 </div>
 			<!-- 	<div class="card-action">
