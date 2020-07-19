@@ -17,7 +17,7 @@
     "express-session": "^1.15.6",
     "materialize-clockpicker": "^1.0.1",
     "method-override": "^2.3.10",
-    "mongoose": "^5.0.4",
+    "mongoose": "^5.7.5",
     "mongoose-schema-formatdate": "^1.0.0"
   }
 }
